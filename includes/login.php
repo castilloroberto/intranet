@@ -30,6 +30,8 @@ if (isset($_POST['login-btn'])) {
                 session_start();
                 $_SESSION['user'] = $user["DNI"];
                 $_SESSION['username'] = $user["Nombre"];
+                $_SESSION['rol'] = $user["Rol"];
+                $_SESSION['id'] = $user["id"];
 
                 header('location: ../home.php');
                 exit();
