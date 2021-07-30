@@ -11,29 +11,53 @@ if (isset($_POST['login-btn'])) {
         header("location: ../index.php?msg="."Campos vacios");
 
     } else {
+        
+        $query = $db->prepare("SELECT * FROM usuarios WHERE DNI = ?;");
 
-        $query = $db->prepare("SELECT * FROM usuarios WHERE DNI = ? AND CLAVE = ?;");
-        $query->bind_param("ss",$dni,$clave); 
+        $query->bind_param("s",$dni); 
         $query->execute();
     
         $result = $query->get_result(); // get the mysqli result
         $user = $result->fetch_assoc(); // fetch data 
+        
         if ($user) {
             # code...
-            header('location: ../home.php');
+            
+            $checkPwd = password_verify($clave,$user["Clave"]);
+            
+            if ($checkPwd) {
+
+                session_start();
+                $_SESSION['user'] = $user["DNI"];
+                $_SESSION['username'] = $user["Nombre"];
+
+                header('location: ../home.php');
+                exit();
+
+            } else {
+                
+                $msg = "Clave incorrecta";
+
+            }
             
         } else {
-            $msg = "Credenciales incorrectas";
-            header("location: ../index.php?msg=".$msg);
+
+            $msg = "Numero de identidad incorrecta";
         }
         $query->close();
-
+        
+        header("location: ../index.php?msg=".$msg);
+        exit();    
+        
+        
+        
     }
-
-
+    
+    
     
 } else{
     header("location: ../index.php");
-    
+    exit();    
+
 }
 

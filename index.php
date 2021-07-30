@@ -1,5 +1,15 @@
+<?php
+     session_start();
+    
+     if (isset($_SESSION['user'])) {
+         # code...
+         header('location: home.php');
+     } 
+?>
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,7 +35,8 @@
 
             if (isset($_REQUEST['msg'])) {
                 # code...
-                echo $_REQUEST['msg'];
+                $msg = $_REQUEST['msg'];
+                echo "<p style='color:red'>$msg</p>";
             }
         ?>
     </main>
