@@ -9,8 +9,9 @@
         <?php 
                
             require 'includes/db.php';
-            $query = $db->prepare("SELECT * FROM filesView where idreceptor or idpropietario = ?;");
-            $query->bind_param("s",$_SESSION['id']); 
+            $userID = $_SESSION['id'];
+            $query = $db->prepare("SELECT * FROM filesView where idreceptor = ? or idpropietario = ?;");
+            $query->bind_param("ss",$userID,$userID); 
             $query->execute();
         
             $result = $query->get_result(); // get the mysqli result

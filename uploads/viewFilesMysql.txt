@@ -1,0 +1,11 @@
+create view filesView
+as
+select f.nombre,
+	f.dir,
+    p.Nombre as propietario,
+    r.Nombre as receptor,
+    p.id as idpropietario,
+    r.id as idreceptor
+from files f
+inner JOIN usuarios p on p.id = f.propietario
+inner JOIN usuarios r on r.id = f.receptor
